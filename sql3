@@ -1,0 +1,70 @@
+
+-- 1
+UPDATE enrolls_in
+SET Grade = 90
+WHERE students_id = 10 AND courses_CourseID = 'ACCT-5038';
+
+SELECT students.first_name, students.last_name, enrolls_in.courses_CourseID, enrolls_in.Grade
+FROM students, enrolls_in
+WHERE students.id = 10 AND enrolls_in.courses_CourseID LIKE 'ACCT%';
+
+-- 2
+SELECT students.first_name, students.last_name, courses.CourseID
+FROM students, enrolls_in
+WHERE students.id = 900 AND enrolls_in.Semester = 'Spring' AND enrolls_in.`Year` = 2012;
+
+UPDATE enrolls_in
+SET Grade = 89
+WHERE students_id = 900 AND courses_CourseID = 'MATH-5917' AND Semester = 'Spring' AND `Year` = 2012;
+
+SELECT students.first_name, students.last_name, courses.CourseID
+FROM students, enrolls_in
+WHERE students.id = 900 AND enrolls_in.Semester = 'Spring' AND enrolls_in.`Year` = 2012;
+
+-- 3
+UPDATE students
+SET email = CONCAT(last_name, '_', LEFT(first_name, 2), '@cidm.wtamu.edu')
+WHERE departments_DepID_Major = 2;
+
+SELECT *
+FROM students
+WHERE departments_DepID_Major = 2;
+
+-- 4
+SELECT departments.DName,
+       MIN(students.DoB),
+       MAX(students.DoB)
+FROM students, departments
+GROUP BY departments.DepID;
+
+-- 5 --
+SELECT professors.Profname,
+       professors.email,
+       taught_by.courses_CourseID
+FROM taught_by
+WHERE taught_by.courses_CourseID LIKE '%-6%' AND taught_by.`Year` = 2010
+GROUP BY professors.Profname, professors.email, taught_by.courses_CourseID;
+
+-- 6 --
+SELECT students.first_name, students.last_name, AVG(enrolls_in.Grade)
+FROM students
+WHERE departments.DName = 'Department of Accounting, Economics and Finance' 
+  AND enrolls_in.`Year` IN (2009, 2012)
+  AND students.gender = 'Female'
+GROUP BY students.id, enrolls_in.`Year`;
+
+-- 7 --
+SELECT students.first_name, students.last_name, AVG(enrolls_in.Grade)
+FROM students
+WHERE departments.DName = 'Department of Accounting, Economics and Finance' 
+  AND enrolls_in.`Year` IN (2009, 2012)
+  AND students.gender = 'Female'
+  AND AVG(enrolls_in.Grade) > 80
+GROUP BY students.id, enrolls_in.`Year`;
+
+-- 8 --
+SELECT students.id, students.first_name, students.last_name, departments.DName, AVG(enrolls_in.Grade)
+FROM students
+GROUP BY students.id, students.first_name, students.last_name, departments.DName
+HAVING COUNT(enrolls_in.students_id) > 0
+ORDER BY AVG(enrolls_in.Grade) DESC;
