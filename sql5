@@ -1,0 +1,64 @@
+INSERT INTO students (id, first_name, last_name, email, gender, DoB, Address, SSN, departments_DepID_Minor, departments_DepID_Major) 
+VALUES (2000,
+'John',
+'Doe',
+'jDoe@fakeData.com',
+'Male',
+'1980-01-01 00:00:00',
+'123 falcon road, nowhere',
+'123-44-5555', NULL,7);
+SELECT * 
+ 
+FROM 
+students 
+ 
+WHERE id = 2000;
+SELECT * 
+ 
+FROM 
+students 
+ 
+WHERE id = 21;
+UPDATE students
+ 
+SET
+ 
+departments_DepID_Major = 2;
+ 
+WHERE 
+id = 21;
+SELECT * 
+ 
+FROM 
+students 
+ 
+WHERE id = 21;
+SELECT * 
+ 
+FROM 
+professors 
+ 
+WHERE departments_DepID_affeliation = 2;
+SELECT * 
+ 
+FROM 
+students 
+ 
+WHERE departments_DepID_Major = 2;
+SELECT * 
+ 
+FROM 
+students 
+ 
+WHERE last_name LIKE '%mc%';
+SELECT COUNT(*) 
+ 
+FROM 
+students 
+ 
+GROUP BY departments_DepID_Major;
+SELECT COUNT(*) 
+ 
+FROM 
+students 
+ WHERE departments_DepID_Major is NULL;
