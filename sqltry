@@ -1,0 +1,59 @@
+create schema if not exists Assignment2;
+use Assignment2;
+
+create table if not exists Customer_ (
+CustId int,
+CName varchar(40),
+Cust_Email text,
+primary key (CustId)
+);
+
+desc Customer_;
+create table if not exists Invoice_ (
+InvNo int,
+customerId int,
+InvDate DATETIME,
+cashier varchar(20),
+subtotal double,
+Tax double,
+Total double,
+foreign key (customerId) references Customer_(CustId),
+primary key (InvNo,customerId)
+);
+
+desc Invoice_;
+
+create table if not exists InvoiceEntries_ (
+invoiceNumber int,
+EntryNo int,
+ItemDescription text,
+price double,
+quantity int,
+foreign key (invoiceNumber) references Invoice_(InvNo),
+primary key (invoiceNumber,EntryNo)
+);
+
+desc InvoiceEntries_;
+
+insert into Customer_ (CustId,CName,Cust_Email)
+values (33,'Rianon Bursnall','rbursnall19@homestead.com'),
+(47,'Deck Hearnes','dhearnes1a@g.com'),
+(222,'Vittorio Anderson','vanderson@omniture.com'),
+(234,'Land Tregenna','ltregenna1c@msu.edu');
+
+insert into Invoice_ (InvNo,customerId,InvDate,Cashier,subtotal,Tax,Total)
+values (2,33,"2020-2-25",'John',120.49,9.639,130.129),
+(6,33,"2021-3-12",'Alice',310,24.8,334.8),
+(19,222,"2020-2-25",'John',57.99,4.639,62.629);
+
+insert into InvoiceEntries_ (invoiceNumber,EntryNo,ItemDescription,price,quantity)
+values (2,1,'Grocery  #2232',7.99,1),
+(2,2,'Frozen Foods  #0232',18.75,2),
+(2,3,'Meat product #1125',25,3),
+(6,1,'TV Model #9922',310,1),
+(19,1,'Meat product #1125',25,2),
+(19,2,'Grocery #2232',7.99,1);
+
+Select * from Customer_;
+Select * from Invoice_;
+select * from InvoiceEntries_;
