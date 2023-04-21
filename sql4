@@ -1,0 +1,47 @@
+create table if not exists Course_ (
+courseID varchar(10),
+CName varchar(40),
+Credits int,
+Description_ text,
+primary key (courseID)
+);
+desc Course_;
+create table if not exists Assessment_ (
+AssessmentID int,
+courseId varchar(10),
+AType varchar(20),
+points int,
+DueDate DATETIME,
+foreign key (courseId) references Course_(courseID),
+primary key (AssessmentID,courseId)
+);
+desc Assessment_;
+insert into Course_ (courseID, CName, Credits, Description_)
+values (
+'CIDM-3320',
+'Digital Communications and Collaboration',3,
+'Theory behind and effective application of digital communications media and 
+workflow automations across the enterprise. Technologies to be studied include blogs, portals, groupware, electronic meeting systems, document 
+management, visualization and virtual team support.
+'
+);
+insert into Course_ (courseID, CName, Credits, Description_)
+values (
+'CIDM-3350',
+'Database Design',3,
+'Principles of database design and structure. Analysis and implementation of database systems with 
+emphasis on the relational model. Detailed study of data modeling concepts and techniques. Topics include physical and logical design, 
+normalization, SQL and data access control.
+'
+);
+insert into Assessment_ (AssessmentID,courseId,AType,points,DueDate)
+values (1,
+'CIDM-3320', 'Test', 200, '2023-3-10 11:59:00'
+),
+(1, 'CIDM-3350', 'Quiz', 50, '2023-01-18 11:59:00'
+),
+(2, 'CIDM-3350', 'Assignment', 
+100, '2023-02-01 11:59:00'
+);
+Select * from Course_;
+Select * from Assessment_;
