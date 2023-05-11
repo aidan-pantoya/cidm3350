@@ -1,0 +1,52 @@
+create schema if not exists Assignment4;
+use Assignment4;
+
+
+CREATE TABLE Books (
+    BookID VARCHAR(50),
+    CopyNumber INT,
+    BookTitle VARCHAR(50),
+    Edition_ INT,
+    PubYear INT,
+    nCopies INT,
+    pub_id INT,
+    Publisher VARCHAR(50),
+    CpyCondition VARCHAR(50),
+    MaxBrDays INT,
+    PRIMARY KEY (BookID, CopyNumber)
+);
+
+
+CREATE TABLE Transactions (
+    BookID VARCHAR(50),
+    CopyNumber INT,
+    outDate DATE,
+    BorrowerId INT,
+    BrName VARCHAR(50),
+    BrAddress VARCHAR(50),
+    ReturnDate DATE,
+    PRIMARY KEY (BookID, outDate, BorrowerId),
+    FOREIGN KEY (BookID, CopyNumber) REFERENCES Books(BookID, CopyNumber)
+);
+
+
+INSERT INTO Books (BookID, CopyNumber, BookTitle, Edition_, PubYear, nCopies, pub_id, Publisher, CpyCondition, MaxBrDays) 
+VALUES 
+('507014976-8',2, 'The Legend of Lizzie Borden', 2, 2016, 2, 3, 'Hills and Sons', 'poor', 5),
+('517680829-3',2, "Fermat's Room", 1, 1998, 3, 1, 'Wyman-Hilll', 'Good', 15),
+('517680829-3',1, "Fermat's Room", 1, 1998, 3, 1, 'Wyman-Hilll', 'New', 15),
+('747439731-5',1, 'The Fantastic Four', 1, 2015, 3, 1, 'Wyman-Hilll', 'Fair', 10);
+
+SELECT * FROM Books;
+
+INSERT INTO Transactions (BookID, CopyNumber, outDate, BorrowerId, BrName, BrAddress, ReturnDate)
+VALUES 
+('507014976-8',2, '2021-12-09', 26, 'Bevan Bantick', '09 Jay Street', '2021-12-14'),
+('517680829-3',1, '2022-05-20', 26, 'Bevan Bantick', '09 Jay Street', '2022-05-28'),
+('517680829-3',1, '2022-05-27', 35, 'Nalani Eim', '56 Fair Oaks Street', '2022-06-11'),
+('517680829-3',2, '2022-08-05', 40, 'Lena Hintzer', '0 Buena Vista Drive', '2022-08-10'),
+('517680829-3',1, '2021-02-26', 89, 'Noak Leinthall', '18523 Jenna Junction', '2021-03-04'),
+('747439731-5',1, '2020-11-17', 28, 'Patty Caunter', '48845 Fuller Drive', '2020-11-27'),
+('747439731-5',1, '2022-01-23', 35, 'Nalani Eim', '56 Fair Oaks Street', '2022-01-28');
+
+SELECT * FROM Transactions;
